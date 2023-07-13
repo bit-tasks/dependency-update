@@ -1,7 +1,7 @@
 import { context, getOctokit } from "@actions/github";
 export type ExecFunction = (command: string, options?: {cwd: string}) => Promise<number>;
 
-const run: (exec: ExecFunction,githubToken: string, wsdir: string) => Promise<void> = async (exec, githubToken, wsdir) => {
+const run: (exec: ExecFunction, branch: string, githubToken: string, wsdir: string) => Promise<void> = async (exec, branch, githubToken, wsdir) => {
 
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
@@ -22,13 +22,13 @@ const run: (exec: ExecFunction,githubToken: string, wsdir: string) => Promise<vo
     await exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
     await exec(`git push origin ${branchName}`, { cwd: wsdir });
     
-    const pull = await octokit.rest.pulls.create({
+    await octokit.rest.pulls.create({
       owner: owner,
       repo: repo,
       title: prTitle,
       head: branchName,
       body: prBody,
-      base: 'main'
+      base: branch
     });
   }
 }

@@ -11,6 +11,10 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 **Optional** The workspace directory path from the root. Default `"Dir specified in Init Task or ./"`.
 
+### `branch`
+
+**Optional** Branch to check for dependency update. Default `main`.
+
 ## Example usage
 
 Define the `bit-tasks/pull-request@v1` action in your pipeline before using the Verify.
@@ -39,6 +43,7 @@ jobs:
           ws-dir: '<WORKSPACE_DIR_PATH>'
       - name: Bit Dependency Update
         uses: bit-tasks/dependency-update@v1
+          branch: 'main'
 ```
 
 # Contributor Guide

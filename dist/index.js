@@ -10884,11 +10884,12 @@ const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
     const stdExec = (command, options) => (0, exec_1.exec)(command, [], options);
     const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
+    const branch = core.getInput("branch") || "main";
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
         throw new Error("GitHub token not found");
     }
-    (0, dependency_update_1.default)(stdExec, githubToken, wsDir);
+    (0, dependency_update_1.default)(stdExec, branch, githubToken, wsDir);
 }
 catch (error) {
     core.setFailed(error.message);
@@ -10913,7 +10914,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github_1 = __nccwpck_require__(5438);
-const run = (exec, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
+const run = (exec, branch, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
     const branchName = "bit-dependency-update";
@@ -10928,13 +10929,13 @@ const run = (exec, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, func
         yield exec('git add .', { cwd: wsdir });
         yield exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
         yield exec(`git push origin ${branchName}`, { cwd: wsdir });
-        const pull = yield octokit.rest.pulls.create({
+        yield octokit.rest.pulls.create({
             owner: owner,
             repo: repo,
             title: prTitle,
             head: branchName,
             body: prBody,
-            base: 'main'
+            base: branch
         });
     }
 });

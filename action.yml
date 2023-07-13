@@ -4,6 +4,10 @@ inputs:
   ws-dir:
     description: "Workspace json file directory path"
     required: false
+  branch:
+    description: "Branch to check for dependency update"
+    required: false
+    defaults: "main"
 runs:
   using: 'node16'
   main: 'dist/index.js'
