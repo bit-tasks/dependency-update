@@ -47,7 +47,6 @@
         "mainFile": "index.ts",
         "rootDir": "scope-name/get-hello-world",
         "config": {
-            "teambit.node/node@0.0.38": {},
             "teambit.envs/envs": {
                 "env": "teambit.node/node"
             },
@@ -63,7 +62,8 @@
                     "name": "get-hello-world",
                     "version": "0.0.7"
                 }
-            }
+            },
+            "teambit.node/node@0.1.10": {}
         }
     },
     "hello-world-app": {

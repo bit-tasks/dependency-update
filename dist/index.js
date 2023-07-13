@@ -10877,36 +10877,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
-const github_1 = __nccwpck_require__(5438);
 const exec_1 = __nccwpck_require__(1514);
-const pull_request_1 = __importDefault(__nccwpck_require__(595));
+const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
-    const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
     const stdExec = (command, options) => (0, exec_1.exec)(command, [], options);
-    const prNumber = (_b = (_a = github_1.context === null || github_1.context === void 0 ? void 0 : github_1.context.payload) === null || _a === void 0 ? void 0 : _a.pull_request) === null || _b === void 0 ? void 0 : _b.number;
-    const laneName = `pr-${prNumber === null || prNumber === void 0 ? void 0 : prNumber.toString()}` || "pr-testlane";
-    if (!prNumber) {
-        throw new Error("Pull Request number is not found");
+    const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+        throw new Error("GitHub token not found");
     }
-    (0, pull_request_1.default)(stdExec, laneName, wsDir).then(() => {
-        const githubToken = process.env.GITHUB_TOKEN;
-        if (!githubToken) {
-            throw new Error("GitHub token not found");
-        }
-        const octokit = (0, github_1.getOctokit)(githubToken);
-        const { owner, repo } = github_1.context.repo;
-        const laneLink = `https://new.bit.cloud/${process.env.ORG}/${process.env.SCOPE}/~lane/${laneName}`;
-        const commentBody = `⚠️ Please review the changes in the Bit lane: ${laneLink}`;
-        octokit.rest.issues.createComment({
-            owner,
-            repo,
-            issue_number: prNumber,
-            body: commentBody,
-        });
-    });
+    (0, dependency_update_1.default)(stdExec, githubToken, wsDir);
 }
 catch (error) {
     core.setFailed(error.message);
@@ -10915,8 +10897,8 @@ catch (error) {
 
 /***/ }),
 
-/***/ 595:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ 5436:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
 
@@ -10930,19 +10912,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const run = (exec, lane, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
-    const org = process.env.ORG;
-    const scope = process.env.SCOPE;
-    try {
-        yield exec(`bit lane remove ${org}.${scope}/${lane} --remote --silent`, { cwd: wsdir });
+const github_1 = __nccwpck_require__(5438);
+const run = (exec, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
+    const octokit = (0, github_1.getOctokit)(githubToken);
+    const { owner, repo } = github_1.context.repo;
+    const branchName = "bit-dependency-update";
+    const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them."; // Commit message
+    const prTitle = "Update bit dependencies";
+    const prBody = "This PR updates the bit dependencies.";
+    yield exec('bit update -y', { cwd: wsdir });
+    yield exec('bit envs update"', { cwd: wsdir });
+    const statusOutput = yield exec('git status --porcelain', { cwd: wsdir });
+    if (statusOutput) {
+        yield exec(`git checkout -b ${branchName}`, { cwd: wsdir });
+        yield exec('git add .', { cwd: wsdir });
+        yield exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
+        yield exec(`git push origin ${branchName}`, { cwd: wsdir });
+        const pull = yield octokit.rest.pulls.create({
+            owner: owner,
+            repo: repo,
+            title: prTitle,
+            head: branchName,
+            body: prBody,
+            base: 'main'
+        });
     }
-    catch (error) {
-        console.error(`Error while removing bit lane: ${error}. Lane may not exist`);
-    }
-    yield exec('bit status --strict', { cwd: wsdir });
-    yield exec(`bit lane create ${lane}`, { cwd: wsdir });
-    yield exec('bit snap -m "CI"', { cwd: wsdir });
-    yield exec('bit export', { cwd: wsdir });
 });
 exports["default"] = run;
 
