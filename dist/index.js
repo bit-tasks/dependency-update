@@ -10879,17 +10879,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
-const exec_1 = __nccwpck_require__(1514);
 const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
-    const stdExec = (command, options) => (0, exec_1.exec)(command, [], options);
     const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
     const branch = core.getInput("branch") || "main";
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
         throw new Error("GitHub token not found");
     }
-    (0, dependency_update_1.default)(stdExec, branch, githubToken, wsDir);
+    (0, dependency_update_1.default)(branch, githubToken, wsDir);
 }
 catch (error) {
     core.setFailed(error.message);
@@ -10914,30 +10912,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github_1 = __nccwpck_require__(5438);
-const run = (exec, branch, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
+const exec_1 = __nccwpck_require__(1514);
+const run = (branch, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
     const branchName = "bit-dependency-update";
     const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them."; // Commit message
     const prTitle = "Update bit dependencies";
     const prBody = "This PR updates the bit dependencies.";
-    yield exec('bit update -y', { cwd: wsdir });
-    yield exec('bit envs update"', { cwd: wsdir });
-    const statusOutput = yield exec('git status --porcelain', { cwd: wsdir });
-    // if (statusOutput) {
-    yield exec(`git checkout -b ${branchName}`, { cwd: wsdir });
-    yield exec('git add .', { cwd: wsdir });
-    yield exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
-    yield exec(`git push origin ${branchName}`, { cwd: wsdir });
-    yield octokit.rest.pulls.create({
-        owner: owner,
-        repo: repo,
-        title: prTitle,
-        head: branchName,
-        body: prBody,
-        base: branch
-    });
-    //}
+    yield (0, exec_1.exec)("bit update -y", [], { cwd: wsdir });
+    yield (0, exec_1.exec)('bit envs update"', [], { cwd: wsdir });
+    let statusOutput = "";
+    const options = {
+        listeners: {
+            stdout: (data) => {
+                statusOutput += data.toString();
+            },
+        },
+        cwd: wsdir,
+    };
+    yield (0, exec_1.exec)("git status --porcelain", [], options);
+    if (statusOutput) {
+        yield (0, exec_1.exec)(`git checkout -b ${branchName}`, [], { cwd: wsdir });
+        yield (0, exec_1.exec)("git add .", [], { cwd: wsdir });
+        yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
+        yield (0, exec_1.exec)(`git push origin ${branchName}`, [], { cwd: wsdir });
+        yield octokit.rest.pulls.create({
+            owner: owner,
+            repo: repo,
+            title: prTitle,
+            head: branchName,
+            body: prBody,
+            base: branch,
+        });
+    }
 });
 exports["default"] = run;
 
