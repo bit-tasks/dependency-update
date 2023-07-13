@@ -1,0 +1,9 @@
+name: 'Bit Dependency Update'
+description: 'Check for new updates of Bit components and create Pull Request with the updates.'
+inputs:
+  ws-dir:
+    description: "Workspace json file directory path"
+    required: false
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
