@@ -10940,7 +10940,7 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir) => __awaiter
         yield (0, exec_1.exec)(`git checkout -b ${branchName}`, [], { cwd: wsdir });
         yield (0, exec_1.exec)("git add .", [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
-        yield (0, exec_1.exec)(`git push origin ${branchName}`, [], { cwd: wsdir });
+        yield (0, exec_1.exec)(`git push origin ${branchName} --force`, [], { cwd: wsdir });
         yield octokit.rest.pulls.create({
             owner: owner,
             repo: repo,
