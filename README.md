@@ -33,6 +33,7 @@ on:
   workflow_dispatch:
 permissions:
   pull-requests: write
+  contents: write
 jobs:
   release:
     runs-on: ubuntu-latest

@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
 permissions:
   pull-requests: write
+  contents: write
 jobs:
   check-for-updates:
     runs-on: ubuntu-latest
