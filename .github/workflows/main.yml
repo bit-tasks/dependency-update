@@ -4,7 +4,7 @@ on:
 permissions:
   pull-requests: write
 jobs:
-  release:
+  check-for-updates:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
