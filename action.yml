@@ -1,5 +1,8 @@
 name: 'Bit Dependency Update'
 description: 'Check for new updates of Bit components and create Pull Request with the updates.'
+branding: 
+  icon: 'shield'
+  color: 'purple'
 inputs:
   ws-dir:
     description: "Workspace json file directory path"
