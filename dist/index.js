@@ -10935,6 +10935,8 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir) => __awaiter
     };
     yield (0, exec_1.exec)("git status --porcelain", [], options);
     if (statusOutput) {
+        yield (0, exec_1.exec)(`git config --global user.name "${gitUserName}"`, [], { cwd: wsdir });
+        yield (0, exec_1.exec)(`git config --global user.email "${gitUserEmail}"`, [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git checkout -b ${branchName}`, [], { cwd: wsdir });
         yield (0, exec_1.exec)("git add .", [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });

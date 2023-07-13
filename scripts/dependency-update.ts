@@ -34,6 +34,8 @@ const run: (
   await exec("git status --porcelain", [], options);
 
   if (statusOutput) {
+    await exec(`git config --global user.name "${gitUserName}"`, [], { cwd: wsdir });
+    await exec(`git config --global user.email "${gitUserEmail}"`, [], { cwd: wsdir });
     await exec(`git checkout -b ${branchName}`, [], { cwd: wsdir });
     await exec("git add .", [], { cwd: wsdir });
     await exec(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
