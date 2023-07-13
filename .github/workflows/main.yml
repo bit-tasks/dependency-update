@@ -22,3 +22,7 @@ jobs:
             ws-dir: 'test-data'   
       - name: Bit Update Dependencies
         uses: bit-tasks/dependency-update@main
+        with:
+          git-user-name: 'ashanfernando'
+          git-user-email: 'ashan256@gmail.com'
+

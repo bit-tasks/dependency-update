@@ -10883,11 +10883,13 @@ const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
     const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
     const branch = core.getInput("branch") || "main";
+    const gitUserName = core.getInput("git-user-name");
+    const gitUserEmail = core.getInput("git-user-email");
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
         throw new Error("GitHub token not found");
     }
-    (0, dependency_update_1.default)(branch, githubToken, wsDir);
+    (0, dependency_update_1.default)(branch, githubToken, gitUserName, gitUserEmail, wsDir);
 }
 catch (error) {
     core.setFailed(error.message);
@@ -10913,11 +10915,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github_1 = __nccwpck_require__(5438);
 const exec_1 = __nccwpck_require__(1514);
-const run = (branch, githubToken, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
+const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
     const branchName = "bit-dependency-update";
-    const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them."; // Commit message
+    const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
     const prTitle = "Update bit dependencies";
     const prBody = "This PR updates the bit dependencies.";
     yield (0, exec_1.exec)("bit update -y", [], { cwd: wsdir });

@@ -15,17 +15,22 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 **Optional** Branch to check for dependency update. Default `main`.
 
+### `git-user-name`
+
+**Required** Github user name to commit back .bitmap file to the repository.
+
+### `git-user-email`
+
+**Required** Github user email to commit back .bitmap file to the repository.
+
 ## Example usage
 
-Define the `bit-tasks/pull-request@v1` action in your pipeline before using the Verify.
+Define the `bit-tasks/init@v1` action in your pipeline before using the Dependency Update.
 
 ```yaml
 name: Test Bit Dependency Update
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  workflow_dispatch:
 permissions:
   pull-requests: write
 jobs:
@@ -43,6 +48,8 @@ jobs:
           ws-dir: '<WORKSPACE_DIR_PATH>'
       - name: Bit Dependency Update
         uses: bit-tasks/dependency-update@v1
+          git-user-name: '<GIT_USER_NAME>'
+          git-user-email: '<GIT_USER_EMAIL>'
           branch: 'main'
 ```
 

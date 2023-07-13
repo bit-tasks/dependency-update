@@ -8,6 +8,12 @@ inputs:
     description: "Branch to check for dependency update"
     required: false
     defaults: "main"
+  git-user-name:
+    description: "Git user name"
+    required: true
+  git-user-email:
+    description: "Git user email"
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'

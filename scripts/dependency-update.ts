@@ -4,14 +4,16 @@ import { exec } from "@actions/exec";
 const run: (
   branch: string,
   githubToken: string,
+  gitUserName: string,
+  gitUserEmail: string,
   wsdir: string
-) => Promise<void> = async (branch, githubToken, wsdir) => {
+) => Promise<void> = async (branch, githubToken, gitUserName, gitUserEmail, wsdir) => {
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
 
   const branchName = "bit-dependency-update";
   const commitMessage =
-    "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them."; // Commit message
+    "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
   const prTitle = "Update bit dependencies";
   const prBody = "This PR updates the bit dependencies.";
 
