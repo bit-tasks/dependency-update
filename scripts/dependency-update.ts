@@ -39,7 +39,7 @@ const run: (
     await exec(`git checkout -b ${branchName}`, [], { cwd: wsdir });
     await exec("git add .", [], { cwd: wsdir });
     await exec(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
-    await exec(`git push origin ${branchName}`, [], { cwd: wsdir });
+    await exec(`git push origin ${branchName} --force`, [], { cwd: wsdir });
 
     await octokit.rest.pulls.create({
       owner: owner,
