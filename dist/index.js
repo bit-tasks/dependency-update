@@ -10924,20 +10924,20 @@ const run = (exec, branch, githubToken, wsdir) => __awaiter(void 0, void 0, void
     yield exec('bit update -y', { cwd: wsdir });
     yield exec('bit envs update"', { cwd: wsdir });
     const statusOutput = yield exec('git status --porcelain', { cwd: wsdir });
-    if (statusOutput) {
-        yield exec(`git checkout -b ${branchName}`, { cwd: wsdir });
-        yield exec('git add .', { cwd: wsdir });
-        yield exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
-        yield exec(`git push origin ${branchName}`, { cwd: wsdir });
-        yield octokit.rest.pulls.create({
-            owner: owner,
-            repo: repo,
-            title: prTitle,
-            head: branchName,
-            body: prBody,
-            base: branch
-        });
-    }
+    // if (statusOutput) {
+    yield exec(`git checkout -b ${branchName}`, { cwd: wsdir });
+    yield exec('git add .', { cwd: wsdir });
+    yield exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
+    yield exec(`git push origin ${branchName}`, { cwd: wsdir });
+    yield octokit.rest.pulls.create({
+        owner: owner,
+        repo: repo,
+        title: prTitle,
+        head: branchName,
+        body: prBody,
+        base: branch
+    });
+    //}
 });
 exports["default"] = run;
 

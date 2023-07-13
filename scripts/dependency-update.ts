@@ -16,7 +16,7 @@ const run: (exec: ExecFunction, branch: string, githubToken: string, wsdir: stri
 
   const statusOutput = await exec('git status --porcelain', { cwd: wsdir });
   
-  if (statusOutput) {
+ // if (statusOutput) {
     await exec(`git checkout -b ${branchName}`, { cwd: wsdir });
     await exec('git add .', { cwd: wsdir });
     await exec(`git commit -m "${commitMessage}"`, { cwd: wsdir });
@@ -30,7 +30,7 @@ const run: (exec: ExecFunction, branch: string, githubToken: string, wsdir: stri
       body: prBody,
       base: branch
     });
-  }
+  //}
 }
 
 export default run;
