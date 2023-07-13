@@ -54,8 +54,8 @@ jobs:
           branch: 'main'
 ```
 
-**Pre-requisite:** Need to allow GitHub Actions to Create Pull Requests. 
-To do that in Your GitHub Organization Settings do the following configuration.
+**Note:** Need to grant permission for the GitHub Action to Create Pull Requests. 
+To do that view in your GitHub Organization and grant permission. You may also need to allow at Repository level as well, if its already disabled.
 
 ```
 Settings -> Actions -> General -> Workflow permissions -> Allow GitHub Actions to create and approve pull requests
