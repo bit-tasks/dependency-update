@@ -41,14 +41,23 @@ const run: (
     await exec(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
     await exec(`git push origin ${branchName} --force`, [], { cwd: wsdir });
 
-    await octokit.rest.pulls.create({
-      owner: owner,
-      repo: repo,
-      title: prTitle,
-      head: branchName,
-      body: prBody,
-      base: branch,
-    });
+    try {
+      await octokit.rest.pulls.create({
+        owner: owner,
+        repo: repo,
+        title: prTitle,
+        head: branchName,
+        body: prBody,
+        base: branch,
+      });
+    } catch (error: any) {
+      if (error.status === 422) {
+        console.log(`A pull request already exists for ${branchName}.`);
+      } else {
+        // If the error is anything other than a PR already existing, rethrow it
+        throw error;
+      }
+    }
   }
 };
 

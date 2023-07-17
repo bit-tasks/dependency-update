@@ -10941,14 +10941,25 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir) => __awaiter
         yield (0, exec_1.exec)("git add .", [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git push origin ${branchName} --force`, [], { cwd: wsdir });
-        yield octokit.rest.pulls.create({
-            owner: owner,
-            repo: repo,
-            title: prTitle,
-            head: branchName,
-            body: prBody,
-            base: branch,
-        });
+        try {
+            yield octokit.rest.pulls.create({
+                owner: owner,
+                repo: repo,
+                title: prTitle,
+                head: branchName,
+                body: prBody,
+                base: branch,
+            });
+        }
+        catch (error) {
+            if (error.status === 422) {
+                console.log(`A pull request already exists for ${branchName}.`);
+            }
+            else {
+                // If the error is anything other than a PR already existing, rethrow it
+                throw error;
+            }
+        }
     }
 });
 exports["default"] = run;
