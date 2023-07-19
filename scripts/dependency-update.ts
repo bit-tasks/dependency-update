@@ -18,13 +18,13 @@ const run: (
   const prTitle = "Update bit dependencies";
   const prBody = "This PR updates the bit dependencies.";
 
-  if (allow.includes('all') || allow.includes('components')) {
+  if (allow.includes('all') || allow.includes('workspace-components')) {
     await exec('bit checkout head --all', [], { cwd: wsdir });
   }
   if (allow.includes('all') || allow.includes('envs')) {
     await exec('bit envs update"', [], { cwd: wsdir });
   }
-  if (allow.includes('all') || allow.includes('packages')) {
+  if (allow.includes('all') || allow.includes('external-dependencies')) {
     await exec("bit update -y", [], { cwd: wsdir });
   }
 
