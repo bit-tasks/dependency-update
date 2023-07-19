@@ -13,7 +13,7 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 ### `allow`
 
-**Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values e.g `"external-dependencies, workspace-components`. Default `"all"`.
+**Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values e.g `external-dependencies, workspace-components`. Default `"all"`.
 
 ### `branch`
 
