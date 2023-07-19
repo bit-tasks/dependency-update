@@ -7,8 +7,8 @@ const run: (
   gitUserName: string,
   gitUserEmail: string,
   wsdir: string,
-  dependencies: string[]
-) => Promise<void> = async (branch, githubToken, gitUserName, gitUserEmail, wsdir, dependencies) => {
+  allow: string[]
+) => Promise<void> = async (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => {
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
 
@@ -18,13 +18,13 @@ const run: (
   const prTitle = "Update bit dependencies";
   const prBody = "This PR updates the bit dependencies.";
 
-  if (dependencies.includes('all') || dependencies.includes('components')) {
+  if (allow.includes('all') || allow.includes('components')) {
     await exec('bit checkout head --all', [], { cwd: wsdir });
   }
-  if (dependencies.includes('all') || dependencies.includes('envs')) {
+  if (allow.includes('all') || allow.includes('envs')) {
     await exec('bit envs update"', [], { cwd: wsdir });
   }
-  if (dependencies.includes('all') || dependencies.includes('packages')) {
+  if (allow.includes('all') || allow.includes('packages')) {
     await exec("bit update -y", [], { cwd: wsdir });
   }
 

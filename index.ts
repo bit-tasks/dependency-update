@@ -7,15 +7,14 @@ try {
   const branch: string = core.getInput("branch") || "main";
   const gitUserName = core.getInput("git-user-name");
   const gitUserEmail = core.getInput("git-user-email");
-  const dependencies = core.getInput('dependencies').split(',');
+  const allow = core.getInput('allow').split(',');
 
   const githubToken = process.env.GITHUB_TOKEN;
   if (!githubToken) {
     throw new Error("GitHub token not found");
   }
 
-  run(branch, githubToken, gitUserName, gitUserEmail, wsDir, dependencies);
-  core.setOutput("")
+  run(branch, githubToken, gitUserName, gitUserEmail, wsDir, allow);
 } catch (error) {
   core.setFailed((error as Error).message);
 }

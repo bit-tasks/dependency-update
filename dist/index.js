@@ -10885,12 +10885,12 @@ try {
     const branch = core.getInput("branch") || "main";
     const gitUserName = core.getInput("git-user-name");
     const gitUserEmail = core.getInput("git-user-email");
-    const dependencies = core.getInput('dependencies').split(',');
+    const allow = core.getInput('allow').split(',');
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
         throw new Error("GitHub token not found");
     }
-    (0, dependency_update_1.default)(branch, githubToken, gitUserName, gitUserEmail, wsDir, dependencies);
+    (0, dependency_update_1.default)(branch, githubToken, gitUserName, gitUserEmail, wsDir, allow);
 }
 catch (error) {
     core.setFailed(error.message);
@@ -10916,20 +10916,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github_1 = __nccwpck_require__(5438);
 const exec_1 = __nccwpck_require__(1514);
-const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, dependencies) => __awaiter(void 0, void 0, void 0, function* () {
+const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
     const branchName = "bit-dependency-update";
     const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
     const prTitle = "Update bit dependencies";
     const prBody = "This PR updates the bit dependencies.";
-    if (dependencies.includes('all') || dependencies.includes('components')) {
+    if (allow.includes('all') || allow.includes('components')) {
         yield (0, exec_1.exec)('bit checkout head --all', [], { cwd: wsdir });
     }
-    if (dependencies.includes('all') || dependencies.includes('envs')) {
+    if (allow.includes('all') || allow.includes('envs')) {
         yield (0, exec_1.exec)('bit envs update"', [], { cwd: wsdir });
     }
-    if (dependencies.includes('all') || dependencies.includes('packages')) {
+    if (allow.includes('all') || allow.includes('packages')) {
         yield (0, exec_1.exec)("bit update -y", [], { cwd: wsdir });
     }
     let statusOutput = "";
