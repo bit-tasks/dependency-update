@@ -28,4 +28,4 @@ jobs:
         with:
           git-user-name: 'ashanfernando'
           git-user-email: 'ashan256@gmail.com'
-          allow: 'all'
+          allow: 'envs'
