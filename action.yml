@@ -7,6 +7,10 @@ inputs:
   ws-dir:
     description: "Workspace json file directory path"
     required: false
+  allow:
+    description: "Allow different types of dependencies. Values 'all', 'packages', 'components', 'envs'"
+    required: false
+    default: "all"
   branch:
     description: "Branch to check for dependency update"
     required: false

@@ -11,6 +11,10 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 **Optional** The workspace directory path from the root. Default `"Dir specified in Init Task or ./"`.
 
+### `allow`
+
+**Optional** Allow different types of dependencies. Values 'all', 'packages', 'components', 'envs'. You can also use a combination of one or two values e.g `"packages, envs`. Default `"all"`.
+
 ### `branch`
 
 **Optional** Branch to check for dependency update. Default `main`.

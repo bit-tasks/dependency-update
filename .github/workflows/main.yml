@@ -22,10 +22,10 @@ jobs:
       - name: Initialize Bit
         uses: bit-tasks/init@v1
         with:
-            ws-dir: 'test-data'   
+          ws-dir: 'test-data'   
       - name: Bit Update Dependencies
         uses: bit-tasks/dependency-update@main
         with:
           git-user-name: 'ashanfernando'
           git-user-email: 'ashan256@gmail.com'
-
+          allow: 'components'
