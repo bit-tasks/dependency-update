@@ -56,6 +56,7 @@ jobs:
           git-user-name: '<GIT_USER_NAME>'
           git-user-email: '<GIT_USER_EMAIL>'
           branch: 'main'
+          allow: 'all'
 ```
 
 **Note:** Need to grant permission for the GitHub Action to Create Pull Requests. 
