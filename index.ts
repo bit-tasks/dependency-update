@@ -15,7 +15,7 @@ try {
   }
 
   run(branch, githubToken, gitUserName, gitUserEmail, wsDir, dependencies);
-  
+  core.setOutput("")
 } catch (error) {
   core.setFailed((error as Error).message);
 }
