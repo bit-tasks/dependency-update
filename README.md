@@ -29,7 +29,7 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 ## Example usage
 
-Define the `bit-tasks/init@v1` action in your pipeline before using the Dependency Update.
+**Note:** Use `bit-task/init@v1` as a prior step in your action before running Bit Verify.
 
 ```yaml
 name: Test Bit Dependency Update

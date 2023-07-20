@@ -10923,13 +10923,13 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => __
     const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
     const prTitle = "Update bit dependencies";
     const prBody = "This PR updates the bit dependencies.";
-    if (allow.includes('all') || allow.includes('workspace-components')) {
-        yield (0, exec_1.exec)('bit checkout head --all', [], { cwd: wsdir });
+    if (allow.includes("all") || allow.includes("workspace-components")) {
+        yield (0, exec_1.exec)("bit checkout head --all", [], { cwd: wsdir });
     }
-    if (allow.includes('all') || allow.includes('envs')) {
+    if (allow.includes("all") || allow.includes("envs")) {
         yield (0, exec_1.exec)('bit envs update"', [], { cwd: wsdir });
     }
-    if (allow.includes('all') || allow.includes('external-dependencies')) {
+    if (allow.includes("all") || allow.includes("external-dependencies")) {
         yield (0, exec_1.exec)("bit update -y", [], { cwd: wsdir });
     }
     let statusOutput = "";
@@ -10943,8 +10943,12 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => __
     };
     yield (0, exec_1.exec)("git status --porcelain", [], options);
     if (statusOutput) {
-        yield (0, exec_1.exec)(`git config --global user.name "${gitUserName}"`, [], { cwd: wsdir });
-        yield (0, exec_1.exec)(`git config --global user.email "${gitUserEmail}"`, [], { cwd: wsdir });
+        yield (0, exec_1.exec)(`git config --global user.name "${gitUserName}"`, [], {
+            cwd: wsdir,
+        });
+        yield (0, exec_1.exec)(`git config --global user.email "${gitUserEmail}"`, [], {
+            cwd: wsdir,
+        });
         yield (0, exec_1.exec)(`git checkout -b ${branchName}`, [], { cwd: wsdir });
         yield (0, exec_1.exec)("git add .", [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });

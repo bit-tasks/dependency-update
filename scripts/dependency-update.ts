@@ -1,14 +1,14 @@
 import { context, getOctokit } from "@actions/github";
 import { exec } from "@actions/exec";
 
-const run: (
+const run = async (
   branch: string,
   githubToken: string,
   gitUserName: string,
   gitUserEmail: string,
   wsdir: string,
   allow: string[]
-) => Promise<void> = async (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => {
+) => {
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
 
@@ -18,13 +18,13 @@ const run: (
   const prTitle = "Update bit dependencies";
   const prBody = "This PR updates the bit dependencies.";
 
-  if (allow.includes('all') || allow.includes('workspace-components')) {
-    await exec('bit checkout head --all', [], { cwd: wsdir });
+  if (allow.includes("all") || allow.includes("workspace-components")) {
+    await exec("bit checkout head --all", [], { cwd: wsdir });
   }
-  if (allow.includes('all') || allow.includes('envs')) {
+  if (allow.includes("all") || allow.includes("envs")) {
     await exec('bit envs update"', [], { cwd: wsdir });
   }
-  if (allow.includes('all') || allow.includes('external-dependencies')) {
+  if (allow.includes("all") || allow.includes("external-dependencies")) {
     await exec("bit update -y", [], { cwd: wsdir });
   }
 
@@ -42,8 +42,12 @@ const run: (
   await exec("git status --porcelain", [], options);
 
   if (statusOutput) {
-    await exec(`git config --global user.name "${gitUserName}"`, [], { cwd: wsdir });
-    await exec(`git config --global user.email "${gitUserEmail}"`, [], { cwd: wsdir });
+    await exec(`git config --global user.name "${gitUserName}"`, [], {
+      cwd: wsdir,
+    });
+    await exec(`git config --global user.email "${gitUserEmail}"`, [], {
+      cwd: wsdir,
+    });
     await exec(`git checkout -b ${branchName}`, [], { cwd: wsdir });
     await exec("git add .", [], { cwd: wsdir });
     await exec(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
