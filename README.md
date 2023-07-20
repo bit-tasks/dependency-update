@@ -42,7 +42,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      BIT_TOKEN: ${{ secrets.BIT_TOKEN }}
+      BIT_CONFIG_USER_TOKEN: ${{ secrets.BIT_CONFIG_USER_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repository
