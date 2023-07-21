@@ -3,7 +3,7 @@ Check for new updates of Bit components and create Pull Request with the updates
 
 # GitHub Actions
 
-This CI Task, check for newer versions of Bit component dependencies in a workspace and create a Pull Request for any updates.
+This task checks for newer versions of Bit component dependencies in a workspace and creates a Pull Request for any updates.
 
 ## Inputs
 
@@ -13,11 +13,11 @@ This CI Task, check for newer versions of Bit component dependencies in a worksp
 
 ### `allow`
 
-**Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values e.g `external-dependencies, workspace-components`. Default `"all"`.
+**Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values, e.g. `external-dependencies, workspace-components`. Default `"all"`.
 
 ### `branch`
 
-**Optional** Branch to check for dependency update. Default `main`.
+**Optional** Branch to check for dependency updates. Default `main`.
 
 ### `git-user-name`
 
@@ -39,7 +39,7 @@ permissions:
   pull-requests: write
   contents: write
 jobs:
-  release:
+  check-for-updates:
     runs-on: ubuntu-latest
     env:
       BIT_CONFIG_USER_TOKEN: ${{ secrets.BIT_CONFIG_USER_TOKEN }}
@@ -59,8 +59,7 @@ jobs:
           allow: 'all'
 ```
 
-**Note:** Need to grant permission for the GitHub Action to Create Pull Requests. 
-To do that view in your GitHub Organization and grant permission. You may also need to allow at Repository level as well, if its already disabled.
+**Note:** To do that, go to your GitHub Organization settings and grant permission. You may also need to allow it at the repository level if it's already disabled.
 
 ```
 Settings -> Actions -> General -> Workflow permissions -> Allow GitHub Actions to create and approve pull requests
@@ -82,12 +81,4 @@ git tag -a -m "action release" v1 --force
 git push --follow-tags
 ```
 
-For more information refer [Create a javascript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action)
-
-## GitLab CI/CD
-
-For more information refer [Specify a custom CI/CD file](https://docs.gitlab.com/ee/ci/pipelines/settings.html#specify-a-custom-cicd-configuration-file)
-
-## Azure DevOps
-
-For more information refer [Add build task](https://learn.microsoft.com/en-us/azure/devops/extend/develop/add-build-task?view=azure-devops)
+For more information, refer to [Create a javascript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action)
