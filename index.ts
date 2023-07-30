@@ -10,6 +10,7 @@ try {
   if (!githubToken) {
     throw new Error("GitHub token not found");
   }
+  
   const gitUserName = process.env.GIT_USER_NAME;
   if (!gitUserName) {
     throw new Error("Git user name not found");
