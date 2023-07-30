@@ -47,7 +47,6 @@
         "mainFile": "index.ts",
         "rootDir": "scope-name/get-hello-world",
         "config": {
-            "teambit.node/node@0.0.38": {},
             "teambit.envs/envs": {
                 "env": "teambit.node/node"
             },
@@ -63,7 +62,8 @@
                     "name": "get-hello-world",
                     "version": "0.0.7"
                 }
-            }
+            },
+            "teambit.node/node@0.1.12": {}
         }
     },
     "hello-world-app": {
@@ -73,7 +73,6 @@
         "mainFile": "index.ts",
         "rootDir": "scope-name/hello-world-app",
         "config": {
-            "learnbit.hello-world/envs/my-react-env@0.0.3": {},
             "teambit.envs/envs": {
                 "env": "learnbit.hello-world/envs/my-react-env"
             },
@@ -90,7 +89,8 @@
                     "name": "hello-world-app",
                     "version": "0.0.8"
                 }
-            }
+            },
+            "learnbit.hello-world/envs/my-react-env@0.0.4": {}
         }
     },
     "ui/hello-world": {
@@ -100,7 +100,6 @@
         "mainFile": "index.ts",
         "rootDir": "scope-name/ui/hello-world",
         "config": {
-            "learnbit.hello-world/envs/my-react-env@0.0.3": {},
             "teambit.envs/envs": {
                 "env": "learnbit.hello-world/envs/my-react-env"
             },
@@ -116,7 +115,8 @@
                     "name": "ui/hello-world",
                     "version": "0.0.8"
                 }
-            }
+            },
+            "learnbit.hello-world/envs/my-react-env@0.0.4": {}
         }
     },
     "$schema-version": "15.0.0"
