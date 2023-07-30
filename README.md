@@ -19,17 +19,9 @@ This task checks for newer versions of Bit component dependencies in a workspace
 
 **Optional** Branch to check for dependency updates. Default `main`.
 
-### `git-user-name`
-
-**Required** Github user name to commit back .bitmap file to the repository.
-
-### `git-user-email`
-
-**Required** Github user email to commit back .bitmap file to the repository.
-
 ## Example usage
 
-**Note:** Use `bit-task/init@v1` as a prior step in your action before running Bit Verify.
+**Note:** Use `bit-task/init@v1` as a prior step in your action before running `bit-tasks/dependency-update@v1`.
 
 ```yaml
 name: Test Bit Dependency Update
@@ -42,8 +34,10 @@ jobs:
   check-for-updates:
     runs-on: ubuntu-latest
     env:
-      BIT_CONFIG_USER_TOKEN: ${{ secrets.BIT_CONFIG_USER_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+      BIT_CONFIG_USER_TOKEN: ${{ secrets.BIT_CONFIG_USER_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -53,8 +47,6 @@ jobs:
           ws-dir: '<WORKSPACE_DIR_PATH>'
       - name: Bit Dependency Update
         uses: bit-tasks/dependency-update@v1
-          git-user-name: '<GIT_USER_NAME>'
-          git-user-email: '<GIT_USER_EMAIL>'
           branch: 'main'
           allow: 'all'
 ```

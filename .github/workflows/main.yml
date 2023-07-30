@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
       BIT_CONFIG_USER_TOKEN: ${{ secrets.BIT_CONFIG_USER_TOKEN }}
     steps:
       - name: Checkout repository
@@ -22,6 +24,4 @@ jobs:
       - name: Bit Update Dependencies
         uses: bit-tasks/dependency-update@main
         with:
-          git-user-name: 'ashanfernando'
-          git-user-email: 'ashan256@gmail.com'
           allow: 'envs'

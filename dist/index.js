@@ -10883,12 +10883,18 @@ const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
     const wsDir = core.getInput("ws-dir") || process.env.WSDIR || "./";
     const branch = core.getInput("branch") || "main";
-    const gitUserName = core.getInput("git-user-name");
-    const gitUserEmail = core.getInput("git-user-email");
     const allow = core.getInput('allow').split(',');
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
         throw new Error("GitHub token not found");
+    }
+    const gitUserName = process.env.GIT_USER_NAME;
+    if (!gitUserName) {
+        throw new Error("Git user name not found");
+    }
+    const gitUserEmail = process.env.GIT_USER_EMAIL;
+    if (!gitUserEmail) {
+        throw new Error("Git user email token not found");
     }
     (0, dependency_update_1.default)(branch, githubToken, gitUserName, gitUserEmail, wsDir, allow);
 }
