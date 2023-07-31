@@ -21,7 +21,7 @@ This task checks for newer versions of Bit component dependencies in a workspace
 
 ## Example usage
 
-**Note:** Use `bit-task/init@v1` as a prior step in your action before running `bit-tasks/dependency-update@v1`.
+**Note:** Use `bit-task/init@v1` as a prior step in your action before running `bit-tasks/dependency-update@v1`. You also need to [allow GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) to create pull requests.
 
 ```yaml
 name: Test Bit Dependency Update
