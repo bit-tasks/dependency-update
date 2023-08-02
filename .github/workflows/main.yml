@@ -24,4 +24,4 @@ jobs:
       - name: Bit Update Dependencies
         uses: bit-tasks/dependency-update@main
         with:
-          allow: 'envs'
+          allow: 'all'
