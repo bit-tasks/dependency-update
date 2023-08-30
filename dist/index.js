@@ -10926,7 +10926,7 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow) => __
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
     const branchName = "bit-dependency-update";
-    const commitMessage = "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
+    const commitMessage = "Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow";
     const prTitle = "Update bit dependencies";
     const prBody = "This PR updates the bit dependencies.";
     if (allow.includes("all") || allow.includes("workspace-components")) {
