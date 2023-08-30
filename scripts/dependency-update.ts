@@ -14,7 +14,7 @@ const run = async (
 
   const branchName = "bit-dependency-update";
   const commitMessage =
-    "Update Bit envs and outdated (direct) external dependencies, as well as the workspace components using them.";
+    "Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow";
   const prTitle = "Update bit dependencies";
   const prBody = "This PR updates the bit dependencies.";
 
