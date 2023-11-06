@@ -3,13 +3,14 @@
 /**
  * The Bitmap file is an auto generated file used by Bit to track all your Bit components. It maps the component to a folder in your file system.
  * This file should be committed to VCS(version control).
- * Components are listed using their component ID (https://bit.dev/docs/components/component-id).
+ * Components are listed using their component ID (https://bit.dev/reference/components/component-id).
  * If you want to delete components you can use the "bit remove <component-id>" command.
- * See the docs (https://bit.dev/docs/components/removing-components) for more information, or use "bit remove --help".
+ * See the docs (https://bit.dev/reference/components/removing-components) for more information, or use "bit remove --help".
  */
 
 {
     "envs/my-react-env": {
+        "name": "envs/my-react-env",
         "scope": "",
         "version": "",
         "defaultScope": "org.scope-name",
@@ -19,7 +20,17 @@
             "teambit.dependencies/dependency-resolver": {
                 "policy": {
                     "dependencies": {
-                        "@teambit/react.react-env": "^0.0.68"
+                        "@teambit/react.react-env": "^0.0.68",
+                        "core-js": "^3.33.2",
+                        "@babel/runtime": "7.23.2",
+                        "jest": "29.7.0"
+                    },
+                    "devDependencies": {
+                        "@types/node": "12.20.55",
+                        "@types/react": "^17.0.69",
+                        "@types/react-dom": "^17.0.22",
+                        "@types/jest": "^26.0.24",
+                        "@types/testing-library__jest-dom": "5.14.9"
                     }
                 }
             },
@@ -41,13 +52,13 @@
         }
     },
     "get-hello-world": {
+        "name": "get-hello-world",
         "scope": "",
         "version": "",
         "defaultScope": "org.scope-name",
         "mainFile": "index.ts",
         "rootDir": "scope-name/get-hello-world",
         "config": {
-            "teambit.node/node@0.0.38": {},
             "teambit.envs/envs": {
                 "env": "teambit.node/node"
             },
@@ -63,17 +74,18 @@
                     "name": "get-hello-world",
                     "version": "0.0.7"
                 }
-            }
+            },
+            "teambit.node/node@1.0.25": {}
         }
     },
     "hello-world-app": {
+        "name": "hello-world-app",
         "scope": "",
         "version": "",
         "defaultScope": "org.scope-name",
         "mainFile": "index.ts",
         "rootDir": "scope-name/hello-world-app",
         "config": {
-            "learnbit.hello-world/envs/my-react-env@0.0.3": {},
             "teambit.envs/envs": {
                 "env": "learnbit.hello-world/envs/my-react-env"
             },
@@ -90,17 +102,18 @@
                     "name": "hello-world-app",
                     "version": "0.0.8"
                 }
-            }
+            },
+            "learnbit.hello-world/envs/my-react-env@0.0.4": {}
         }
     },
     "ui/hello-world": {
+        "name": "ui/hello-world",
         "scope": "",
         "version": "",
         "defaultScope": "org.scope-name",
         "mainFile": "index.ts",
         "rootDir": "scope-name/ui/hello-world",
         "config": {
-            "learnbit.hello-world/envs/my-react-env@0.0.3": {},
             "teambit.envs/envs": {
                 "env": "learnbit.hello-world/envs/my-react-env"
             },
@@ -116,7 +129,8 @@
                     "name": "ui/hello-world",
                     "version": "0.0.8"
                 }
-            }
+            },
+            "learnbit.hello-world/envs/my-react-env@0.0.4": {}
         }
     },
     "$schema-version": "15.0.0"
