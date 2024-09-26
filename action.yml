@@ -1,20 +1,29 @@
 name: 'Bit Dependency Update'
 description: 'Check for new updates of Bit components and create Pull Request with the updates.'
-branding: 
+branding:
   icon: 'shield'
   color: 'purple'
 inputs:
   ws-dir:
-    description: "Workspace json file directory path"
+    description: 'Workspace json file directory path'
     required: false
   allow:
-    description: "Allow different types of dependencies. Values 'all', 'packages', 'components', 'envs'"
+    description: "Allow different types of dependencies. Values 'all', 'external-dependencies', 'workspace-components', 'envs'"
     required: false
-    default: "all"
+    default: 'all'
+  version-update-policy:
+    description: |
+      Determines how to update dependency versions. If left undefined, it updates to the latest available version while ignoring SemVer rules.
+      - 'patch': Update to the latest patch version. SemVer rules are ignored.
+      - 'minor': Update to the latest minor version. SemVer rules are ignored.
+      - 'major': Update to the latest major version. SemVer rules are ignored.
+      - 'semver': 'Update to the newest version while respecting SemVer.
+    required: false
+    default: ''
   branch:
-    description: "Branch to check for dependency update"
+    description: 'Branch to check for dependency update'
     required: false
-    defaults: "main"
+    defaults: 'main'
 runs:
   using: 'node20'
   main: 'dist/index.js'
