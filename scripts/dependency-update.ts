@@ -1,5 +1,5 @@
-import { context, getOctokit } from "@actions/github";
-import { exec } from "@actions/exec";
+import { context, getOctokit } from '@actions/github';
+import { exec } from '@actions/exec';
 
 const run = async (
   branch: string,
@@ -7,28 +7,30 @@ const run = async (
   gitUserName: string,
   gitUserEmail: string,
   wsdir: string,
-  allow: string[]
+  allow: string[],
+  versionUpdatePolicy: string
 ) => {
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
 
-  const branchName = "bit-dependency-update";
+  const branchName = 'bit-dependency-update';
   const commitMessage =
-    "Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow";
-  const prTitle = "Update bit dependencies";
-  const prBody = "This PR updates the bit dependencies.";
+    'Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow';
+  const prTitle = 'Update bit dependencies';
+  const prBody = 'This PR updates the bit dependencies.';
 
-  if (allow.includes("all") || allow.includes("workspace-components")) {
-    await exec("bit checkout head --all", [], { cwd: wsdir });
+  if (allow.includes('all') || allow.includes('workspace-components')) {
+    await exec('bit checkout head --all', [], { cwd: wsdir });
   }
-  if (allow.includes("all") || allow.includes("envs")) {
-    await exec('bit envs update"', [], { cwd: wsdir });
+  if (allow.includes('all') || allow.includes('envs')) {
+    await exec('bit envs update', [], { cwd: wsdir });
   }
-  if (allow.includes("all") || allow.includes("external-dependencies")) {
-    await exec("bit update -y", [], { cwd: wsdir });
+  if (allow.includes('all') || allow.includes('external-dependencies')) {
+    const semverOption = versionUpdatePolicy ? `--${versionUpdatePolicy}` : '';
+    await exec(`bit update -y ${semverOption}`, [], { cwd: wsdir });
   }
 
-  let statusOutput = "";
+  let statusOutput = '';
 
   const options = {
     listeners: {
@@ -39,7 +41,7 @@ const run = async (
     cwd: wsdir,
   };
 
-  await exec("git status --porcelain", [], options);
+  await exec('git status --porcelain', [], options);
 
   if (statusOutput) {
     await exec(`git config --global user.name "${gitUserName}"`, [], {
@@ -49,7 +51,7 @@ const run = async (
       cwd: wsdir,
     });
     await exec(`git checkout -b ${branchName}`, [], { cwd: wsdir });
-    await exec("git add .", [], { cwd: wsdir });
+    await exec('git add .', [], { cwd: wsdir });
     await exec(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
     await exec(`git push origin ${branchName} --force`, [], { cwd: wsdir });
 
