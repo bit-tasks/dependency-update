@@ -1,4 +1,5 @@
 # Bit Dependency Update for CI/CD Pipelines
+
 Check for new updates of Bit components and create Pull Request with the updates.
 
 # GitHub Actions
@@ -14,6 +15,18 @@ This task checks for newer versions of Bit component dependencies in a workspace
 ### `allow`
 
 **Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values, e.g. `external-dependencies, workspace-components`. Default `"all"`.
+
+### `version-update-policy`
+
+**Optional** Defines the version update policy.
+
+**Default** `''`. No restrictions on version updates. Update to the latest available version.
+
+Options:
+- `semver` - Only update to newer versions that satisfy the semver policy (as it is defined in the `workspace.jsonc`, or other sources).
+- `minor` - Only update to newer minor versions.
+- `patch` - Only update to newer patch versions.
+
 
 ### `branch`
 
@@ -49,6 +62,7 @@ jobs:
         uses: bit-tasks/dependency-update@v1
           branch: 'main'
           allow: 'all'
+          version-update-policy: 'semver'
 ```
 
 **Note:** To do that, go to your GitHub Organization settings and grant permission. You may also need to allow it at the repository level if it's already disabled.
