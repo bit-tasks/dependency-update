@@ -10,9 +10,9 @@ try {
   const allowExternalDependencies =
     allow.includes('external-dependencies') || allow.includes('all');
 
-  if (!allowExternalDependencies) {
+  if (!allowExternalDependencies && versionUpdatePolicy) {
     core.warning(
-      'External dependency updates are not allowed. version-update-policy is ignored.'
+      'External dependency updates are not allowed. "Version update policy" is ignored.'
     );
   }
 

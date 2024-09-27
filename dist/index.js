@@ -14018,8 +14018,8 @@ try {
     const allow = core.getInput('allow').split(',');
     const versionUpdatePolicy = core.getInput('version-update-policy') || '';
     const allowExternalDependencies = allow.includes('external-dependencies') || allow.includes('all');
-    if (!allowExternalDependencies) {
-        core.warning('External dependency updates are not allowed. version-update-policy is ignored.');
+    if (!allowExternalDependencies && versionUpdatePolicy) {
+        core.warning('External dependency updates are not allowed. "Version update policy" is ignored.');
     }
     const githubToken = process.env.GITHUB_TOKEN;
     if (!githubToken) {
