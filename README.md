@@ -1,10 +1,14 @@
 # Bit Dependency Update for CI/CD Pipelines
 
-Check for new updates of Bit components and create Pull Request with the updates.
+This task simplifies the process of keeping dependencies in a Bit workspace up to date. It can be triggered manually, by a scheduled job, or in response to component release events on the Bit platform.
 
-# GitHub Actions
+Once triggered, the task automatically generates a pull request with the updated dependencies, allowing the team to review and merge the changes.
 
-This task checks for newer versions of Bit component dependencies in a workspace and creates a Pull Request for any updates.
+## Types of dependency updates
+
+1. **External Dependencies**: Updates packages and Bit components that are not maintained in the workspace but are used by the workspace components (refer to the `version-update-policy` input for more details).
+2. **Workspace Components**: Updates Bit components that are maintained within the workspace, including changes to their source files, dependencies, and configurations.
+3. **Environments (envs)**: Updates reusable development environments used by workspace components.
 
 ## Inputs
 
@@ -18,15 +22,15 @@ This task checks for newer versions of Bit component dependencies in a workspace
 
 ### `version-update-policy`
 
-**Optional** Defines the version update policy.
+**Optional** Defines the version update policy (semver, minor, patch). Used in combination with the `allow` input to restrict the version updates of **external dependencies**.
 
 **Default** `''`. No restrictions on version updates. Update to the latest available version.
 
 Options:
+
 - `semver` - Only update to newer versions that satisfy the semver policy (as it is defined in the `workspace.jsonc`, or other sources).
 - `minor` - Only update to newer minor versions.
 - `patch` - Only update to newer patch versions.
-
 
 ### `branch`
 
