@@ -17,10 +17,10 @@
         "mainFile": "index.ts",
         "rootDir": "my-scope/button",
         "config": {
-            "bitdev.react/react-env@2.1.5": {},
             "teambit.envs/envs": {
                 "env": "bitdev.react/react-env"
-            }
+            },
+            "bitdev.react/react-env@2.1.6": {}
         }
     },
     "constants/links": {
@@ -28,7 +28,18 @@
         "scope": "teambit.community",
         "version": "0.0.8",
         "mainFile": "index.ts",
-        "rootDir": "community/constants/links"
+        "rootDir": "community/constants/links",
+        "config": {
+            "teambit.dependencies/dependency-resolver": {
+                "policy": {
+                    "devDependencies": {
+                        "@types/jest": "29.5.13",
+                        "@types/node": "22.7.4",
+                        "@babel/runtime": "7.25.6"
+                    }
+                }
+            }
+        }
     },
     "$schema-version": "17.0.0"
 }
