@@ -4,7 +4,7 @@ import run from './scripts/dependency-update';
 try {
   const wsDir: string = core.getInput('ws-dir') || process.env.WSDIR || './';
   const branch: string = core.getInput('branch') || 'main';
-  const allow = core.getInput('allow').split(',');
+  const allow = core.getInput('allow').replace(/\s+/g, '').split(',');
   const versionUpdatePolicy = core.getInput('version-update-policy') || '';
 
   const allowExternalDependencies =

@@ -14015,7 +14015,7 @@ const dependency_update_1 = __importDefault(__nccwpck_require__(5436));
 try {
     const wsDir = core.getInput('ws-dir') || process.env.WSDIR || './';
     const branch = core.getInput('branch') || 'main';
-    const allow = core.getInput('allow').split(',');
+    const allow = core.getInput('allow').replace(/\s+/g, '').split(',');
     const versionUpdatePolicy = core.getInput('version-update-policy') || '';
     const allowExternalDependencies = allow.includes('external-dependencies') || allow.includes('all');
     if (!allowExternalDependencies && versionUpdatePolicy) {
