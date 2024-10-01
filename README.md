@@ -1,13 +1,13 @@
 # Bit Dependency Update for CI/CD Pipelines
 
-This task simplifies the process of keeping dependencies in a Bit workspace up to date. It can be triggered manually, by a scheduled job, or in response to component release events on the Bit platform.
+This task generates a pull request to update dependencies, Bit components, and environments used by the Bit workspace in your Git repository. It streamlines the process of keeping your Bit workspace up to date through scheduled jobs, manual runs, or component release events on the Bit platform.
 
-Once triggered, the task automatically generates a pull request with the updated dependencies, allowing the team to review and merge the changes.
+This task allows you to modify and update components using Cloud Workspaces and Hope AI on the Bit Platform, while ensuring your repository stays synchronized with these changes.
 
 ## Types of dependency updates
 
-1. **External Dependencies**: Updates packages and Bit components that are not maintained in the workspace but are used by the workspace components (refer to the `version-update-policy` input for more details).
-2. **Workspace Components**: Updates Bit components that are maintained within the workspace, including changes to their source files, dependencies, and configurations.
+1. **External Dependencies**: Updates packages and Bit components that are not maintained in the workspace but are used by the workspace components.
+2. **Workspace Components**: Updates Bit components that are maintained in the workspace, including changes to their source files, dependencies, and configurations.
 3. **Environments (envs)**: Updates reusable development environments used by workspace components.
 
 ## Inputs
@@ -18,7 +18,16 @@ Once triggered, the task automatically generates a pull request with the updated
 
 ### `allow`
 
-**Optional** Allow different types of dependencies. Options `all`, `external-dependencies`, `workspace-components`, `envs`. You can also use a combination of one or two values, e.g. `external-dependencies, workspace-components`. Default `"all"`.
+**Optional** Allow different types of dependency updates. You can select multiple options, seperated by commas. For example: `'external-dependencies, envs'`.
+
+**Default**: `'all'`
+
+Options:
+
+- `external-dependencies`: Only update the versions of Bit components and packages _installed_ in your workspace. See the `version-update-policy` input to learn how to restrict updates using Semver rules. 
+- `workspace-components`: Only update Bit components that are maintained in your workspace (`bit checkout head --all`).
+- `envs`: Only update the version of envs ('reusable development environments') used by Bit components maintained in your workspace.
+- `all`: Allow for updates of all types.
 
 ### `version-update-policy`
 
@@ -41,8 +50,10 @@ Options:
 **Note:** Use `bit-task/init@v1` as a prior step in your action before running `bit-tasks/dependency-update@v1`. You also need to [allow GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) to create pull requests.
 
 ```yaml
-name: Test Bit Dependency Update
+name: Bit Dependency Update
 on:
+  schedule:
+    - cron: '0 0 * * *'
   workflow_dispatch:
 permissions:
   pull-requests: write
