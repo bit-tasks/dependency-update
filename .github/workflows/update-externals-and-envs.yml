@@ -1,4 +1,4 @@
-name: Test Bit Dependency Update
+name: Test Update Externals and Envs
 on:
   workflow_dispatch:
 permissions:
