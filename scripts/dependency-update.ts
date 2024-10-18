@@ -8,7 +8,10 @@ const run = async (
   gitUserEmail: string,
   wsdir: string,
   allow: string[],
-  versionUpdatePolicy: string
+  versionUpdatePolicy: string,
+  packagePatterns: string,
+  componentPatterns: string,
+  envPatterns: string
 ) => {
   const octokit = getOctokit(githubToken);
   const { owner, repo } = context.repo;
@@ -18,16 +21,17 @@ const run = async (
     'Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow';
   const prTitle = 'Update bit dependencies';
   const prBody = 'This PR updates the bit dependencies.';
+  
 
   if (allow.includes('all') || allow.includes('workspace-components')) {
-    await exec('bit checkout head --all', [], { cwd: wsdir });
+    await exec(`bit checkout head --all "${componentPatterns}"`, [], { cwd: wsdir });
   }
   if (allow.includes('all') || allow.includes('envs')) {
-    await exec('bit envs update', [], { cwd: wsdir });
+    await exec(`bit envs update "${envPatterns}"`, [], { cwd: wsdir });
   }
   if (allow.includes('all') || allow.includes('external-dependencies')) {
     const semverOption = versionUpdatePolicy ? `--${versionUpdatePolicy}` : '';
-    await exec(`bit update -y ${semverOption}`, [], { cwd: wsdir });
+    await exec(`bit update -y ${semverOption} "${packagePatterns}"`, [], { cwd: wsdir });
   }
 
   let statusOutput = '';

@@ -6,6 +6,9 @@ try {
   const branch: string = core.getInput('branch') || 'main';
   const allow = core.getInput('allow').replace(/\s+/g, '').split(',');
   const versionUpdatePolicy = core.getInput('version-update-policy') || '';
+  const packagePatterns = core.getInput('package-patterns') || '';
+  const componentPatterns = core.getInput('component-patterns') || '';
+  const envPatterns = core.getInput('env-patterns') || '';
 
   const allowExternalDependencies =
     allow.includes('external-dependencies') || allow.includes('all');
@@ -38,7 +41,10 @@ try {
     gitUserEmail,
     wsDir,
     allow,
-    versionUpdatePolicy
+    versionUpdatePolicy,
+    packagePatterns,
+    componentPatterns,
+    envPatterns
   );
 } catch (error) {
   core.setFailed((error as Error).message);

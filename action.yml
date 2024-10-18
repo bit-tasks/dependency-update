@@ -20,6 +20,15 @@ inputs:
       - 'semver': 'Update to the newest version while respecting SemVer.
     required: false
     default: ''
+  package-patterns:
+    description: 'A string list of package names, or patterns (separated by spaces or commas), e.g. "@babel/runtime,@types/**". The patterns should be in glob format. By default, all packages are selected.'
+    required: false
+  component-patterns:
+    description: 'A string list of component names, or patterns (separated by spaces or commas), e.g. "@teambit/**,@my-org/ui/**". The patterns should be in glob format. By default, all components are selected.'
+    required: false
+  env-patterns:
+    description: 'A string list of env names, or patterns (separated by spaces or commas), e.g. "@teambit/envs/**,@bitdev/envs/**". The patterns should be in glob format. By default, all envs are selected.'
+    required: false
   branch:
     description: 'Branch to check for dependency update'
     required: false
