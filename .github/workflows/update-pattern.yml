@@ -25,4 +25,4 @@ jobs:
         uses: bit-tasks/dependency-update@main
         with:
           allow: 'all'
-          package-pattern: '@types/node'
+          package-patterns: '@types/node'
