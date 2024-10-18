@@ -45,6 +45,18 @@ Options:
 
 **Optional** Branch to check for dependency updates. Default `main`.
 
+### `package-patterns`
+
+**Optional** A string list of package names or patterns, separated by spaces or commas. For example: `'@babel/runtime,@types/**'`. Patterns should be in glob format. Default: All packages are selected.
+
+### `component-patterns`
+
+**Optional** A string list of component names or patterns, separated by spaces or commas. For example: `'@teambit/**,@my-org/ui/**'`. Patterns should be in glob format. Default: All components are selected.
+
+### `env-patterns`
+
+**Optional** A string list of environment names or patterns, separated by spaces or commas. For example: `'@teambit/envs/**,@bitdev/envs/**'`. Patterns should be in glob format. Default: All environments are selected.
+
 ## Example usage
 
 **Note:** Use `bit-task/init@v1` as a prior step in your action before running `bit-tasks/dependency-update@v1`. You also need to [allow GitHub Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) to create pull requests.
