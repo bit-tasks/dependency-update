@@ -1,62 +1,45 @@
 /**
  * this is the main configuration file of your bit workspace.
  * for full documentation, please see: https://bit.dev/reference/workspace/workspace-json
- **/ {
+ **/{
   "$schema": "https://static.bit.dev/teambit/schemas/schema.json",
   /**
    * main configuration of the Bit workspace.
    **/
   "teambit.workspace/workspace": {
-    /**
-     * the name of the component workspace. used for development purposes.
-     **/
     "name": "test-data",
-    /**
-     * set the icon to be shown on the Bit server.
-     **/
     "icon": "https://static.bit.dev/brands/bit-logo-min.png",
-    /**
-     * default directory to place a component during `bit import` and `bit create`.
-     * the following placeholders are available:
-     * name - component name includes namespace, e.g. 'ui/button'.
-     * scopeId - full scope-id includes the owner, e.g. 'teambit.compilation'.
-     * scope - scope name only, e.g. 'compilation'.
-     * owner - owner name in bit.dev, e.g. 'teambit'.
-     **/
     "defaultDirectory": "{scope}/{name}",
-    /**
-     * default scope for all components in workspace.
-     **/
-    "defaultScope": "my-org.my-scope",
+    "defaultScope": "frontend.ci-scripts-tests",
     "resolveAspectsFromNodeModules": true,
     "resolveEnvsFromRoots": true
   },
   /**
-   * Enable generator templates by uncommenting the desired environments below.
-   * These generators scaffold components for Node, React, Vue, and Angular.
-   * After uncommenting, run `bit install` to make them available in your workspace.
-   * Explore more dev environments at: https://bit.dev/docs/getting-started/composing/dev-environments
-   **/
+  * Enable generator templates by uncommenting the desired environments below.
+  * These generators scaffold components for Node, React, Vue, and Angular.
+  * After uncommenting, run `bit install` to make them available in your workspace.
+  * Explore more dev environments at: https://bit.dev/docs/getting-started/composing/dev-environments
+  **/
   "teambit.generator/generator": {
     "envs": [
       "bitdev.node/node-env",
       "bitdev.react/react-env"
-      //  "bitdev.vue/vue-env",
-      //  "bitdev.angular/angular-env"
+      // "bitdev.vue/vue-env",
+      // "bitdev.angular/angular-env"
+      // "bitdev.symphony/envs/symphony-env"
     ]
   },
   /**
    * main configuration for component dependency resolution.
    **/
   "teambit.dependencies/dependency-resolver": {
-    /**
-     * choose the package manager for Bit to use. you can choose between 'yarn', 'pnpm'
-     */
-    "packageManager": "teambit.dependencies/pnpm",
     "policy": {
       "dependencies": {
-        "classnames": "^1.2.1",
-        "lodash": "~4.16.4"
+        "@bitdev/react.app-types.vite-react": "^2.1.7",
+        "@bitdev/react.preview.react-docs-template": "^0.0.7",
+        "@bitdev/react.react-env": "^4.1.9",
+        "@teambit/react.mounter": "^1.0.49",
+        "@vitejs/plugin-react": "^4.7.0"
       },
       "peerDependencies": {}
     },
@@ -65,5 +48,8 @@
   },
   "teambit.workspace/workspace-config-files": {
     "enableWorkspaceConfigWrite": true
+  },
+  "teambit.harmony/bit": {
+    "engine": "1.12.2"
   }
 }

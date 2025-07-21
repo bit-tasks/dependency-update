@@ -10930,6 +10930,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const github_1 = __nccwpck_require__(5438);
 const exec_1 = __nccwpck_require__(1514);
+const extractDependencyChanges = (output) => {
+    var _a;
+    const depSection = (_a = output.split('dependencies:')[1]) === null || _a === void 0 ? void 0 : _a.split('✔')[0];
+    if (!depSection)
+        return '';
+    return depSection
+        .split('\n')
+        .filter(line => line.trim().startsWith('-') || line.trim().startsWith('+'))
+        .join('\n');
+};
+const extractUpdatedEnvs = (output) => {
+    const match = output.match(/the following component\(s\) env has been successfully updated:[\s\S]+?(?=please run|$)/);
+    return match ? match[0].trim() : '';
+};
 const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow, versionUpdatePolicy, packagePatterns, componentPatterns, envPatterns) => __awaiter(void 0, void 0, void 0, function* () {
     const octokit = (0, github_1.getOctokit)(githubToken);
     const { owner, repo } = github_1.context.repo;
@@ -10937,15 +10951,25 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow, versi
     const commitMessage = 'Update Bit envs, outdated (direct) external dependencies, and workspace components according to the defined CI task parameter --allow';
     const prTitle = 'Update bit dependencies';
     const prBody = 'This PR updates the bit dependencies.';
+    let updateResult, envsUpdateResult;
+    let dependencyChanges = '', updatedEnvs = '';
     if (allow.includes('all') || allow.includes('workspace-components')) {
         yield (0, exec_1.exec)(`bit checkout head --all "${componentPatterns}"`, [], { cwd: wsdir });
     }
     if (allow.includes('all') || allow.includes('envs')) {
-        yield (0, exec_1.exec)(`bit envs update "${envPatterns}"`, [], { cwd: wsdir });
+        envsUpdateResult = yield (0, exec_1.getExecOutput)(`bit envs update "${envPatterns}"`, [], {
+            cwd: wsdir,
+            env: Object.assign(Object.assign({}, process.env), { BIT_DISABLE_SPINNER: "false" })
+        });
+        updatedEnvs = extractUpdatedEnvs(envsUpdateResult.stdout);
     }
     if (allow.includes('all') || allow.includes('external-dependencies')) {
         const semverOption = versionUpdatePolicy ? `--${versionUpdatePolicy}` : '';
-        yield (0, exec_1.exec)(`bit update -y ${semverOption} "${packagePatterns}"`, [], { cwd: wsdir });
+        updateResult = yield (0, exec_1.getExecOutput)(`bit update -y ${semverOption} "${packagePatterns}"`, [], {
+            cwd: wsdir,
+            env: Object.assign(Object.assign({}, process.env), { BIT_DISABLE_SPINNER: "false" })
+        });
+        dependencyChanges = extractDependencyChanges(updateResult.stdout);
     }
     let statusOutput = '';
     const options = {
@@ -10968,6 +10992,9 @@ const run = (branch, githubToken, gitUserName, gitUserEmail, wsdir, allow, versi
         yield (0, exec_1.exec)('git add .', [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git commit -m "${commitMessage}"`, [], { cwd: wsdir });
         yield (0, exec_1.exec)(`git push origin ${branchName} --force`, [], { cwd: wsdir });
+        const prBody = `This PR updates the bit dependencies.\n\n` +
+            (dependencyChanges ? `## Dependency Changes\n\n\`\`\`\n${dependencyChanges}\`\`\`\n\n` : '') +
+            (updatedEnvs ? `## Updated Envs\n\n\`\`\`\n${updatedEnvs}\`\`\`\n` : '');
         try {
             yield octokit.rest.pulls.create({
                 owner: owner,
