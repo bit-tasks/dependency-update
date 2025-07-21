@@ -37,8 +37,8 @@
       "dependencies": {
         "@bitdev/react.app-types.vite-react": "^2.1.7",
         "@bitdev/react.preview.react-docs-template": "^0.0.7",
-        "@bitdev/react.react-env": "^4.1.9",
-        "@teambit/react.mounter": "^1.0.49",
+        "@bitdev/react.react-env": "^4.1.11",
+        "@teambit/react.mounter": "^1.0.51",
         "@vitejs/plugin-react": "^4.7.0"
       },
       "peerDependencies": {}
