@@ -35,11 +35,11 @@
   "teambit.dependencies/dependency-resolver": {
     "policy": {
       "dependencies": {
-        "@bitdev/react.app-types.vite-react": "^2.1.7",
-        "@bitdev/react.preview.react-docs-template": "^0.0.7",
-        "@bitdev/react.react-env": "^4.1.9",
-        "@teambit/react.mounter": "^1.0.49",
-        "@vitejs/plugin-react": "^4.7.0"
+        "@bitdev/react.app-types.vite-react": "^3.0.15",
+        "@bitdev/react.preview.react-docs-template": "^1.0.15",
+        "@bitdev/react.react-env": "^6.0.28",
+        "@teambit/react.mounter": "^1.1.9",
+        "@vitejs/plugin-react": "^6.1.1"
       },
       "peerDependencies": {}
     },
